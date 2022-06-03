@@ -1,26 +1,24 @@
-
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDogs, getTemperaments, filterDogsByTemperament, sortByName, filterDogsCreated, filterByWeight } from '../actions'
+import { getDogs, getTemperaments, filterDogsByTemperament,filterDogsByOrigin, sortByName, sortByWeight } from '../actions'
 import { Link } from 'react-router-dom'
-import Card from './Card'
-import Paginado from './Paginado'
-import SearchBar from './SearchBar'
+import Card from './Card.jsx'
+import Paginado from './Paginado.jsx'
+import SearchBar from './SearchBar.jsx'
 
 export default function Home() {
 
     const dispatch = useDispatch()
 
-    // ESTUDIAR: CON ESTO DECLARO LA CONST Y CON EL USESELECTOR ME TRAIGO TODO LO QUE ESTA EN EL ESTADO
-
     const allDogs = useSelector((state) => state.dogs)
     const allTemperaments = useSelector((state) => state.temperaments)
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [dogPerPage, setDogCurrentPerPage] = useState(8)
-    const indexOfLastDog = currentPage * dogPerPage
-    const indexOfFirstDog = indexOfLastDog - dogPerPage
-    const currentDog = allDogs.slice(indexOfFirstDog, indexOfLastDog)
+    const [dogsPerPage, /*_setDogCurrentPerPage*/] = useState(8)
+    const indexOfLastDog = currentPage * dogsPerPage
+    const indexOfFirstDog = indexOfLastDog - dogsPerPage
+    const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog)
 
     const [_orden, setOrden] = useState('')
 
@@ -51,89 +49,98 @@ export default function Home() {
         e.preventDefault();
         dispatch(sortByName(e.target.value))
         setCurrentPage(1)
-        setOrden(`Se a filtrado de ${e.target.value}`)
+        setOrden(`Ordenado ${e.target.value}`)
     }
 
-    function handleFilterCreated(e) {
+    function handleFilterOrigin(e) {
         e.preventDefault()
         setCurrentPage(1)
-        dispatch(filterDogsCreated(e.target.value))
+        dispatch(filterDogsByOrigin(e.target.value))
 
     }
 
-    function handleFilterByWeight(e) {
+    function handleSortByWeight(e) {
         e.preventDefault()
-        dispatch(filterByWeight(e.target.value))
+        dispatch(sortByWeight(e.target.value))
         setCurrentPage(1)
-        setOrden(`Se a filtrado de ${e.target.value}`)
+        setOrden(`Ordenado ${e.target.value}`)
     }
 
     return (
         <div>
-            <Link to='/dogs'> Crear Perro</Link>
-            <h1>HOLA ESTO ES EL HOME</h1>
-            <button onClick={e => { handleClick(e) }}>
-                Cargar todos los perros
-            </button>
             <div>
-                <SearchBar/>
-                <select onChange={e => handleSortByName(e)}>
-                    <option value="selected" hidden >Orden Alfabetico</option>
-                    <option value="ABC">A-Z</option>
-                    <option value="ZXY">Z-A</option>
-                </select>
+                <ul>
+                    <li>
+                        <button onClick={e =>{handleClick(e)}}>Pagina Principal</button>
+                    </li>
+                    <li>
+                        <Link to='/dogs'><button>Crear Perro</button></Link>
+                    </li>
+                    <li>
+                        <select onChange={e=> handleSortByName(e)}>
+                            <option value="selected" hidden >Ordenado por Nombre</option>
+                            <option value="ABC">A - Z</option>
+                            <option value="ZYX">Z - A</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select onChange={e=> handleSortByWeight(e)}>
+                            <option value="selected" hidden>Ordenado por Peso</option>
+                            <option value="asc">Mas Livianos</option>
+                            <option value="desc">Mas Pesados</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select onChange={e => handleFilterTemperaments(e)}>
+                            <option key={0} value='all'>Todos los Temperamentos</option>
+                            {allTemperaments?.sort(function(a,b){
+                                if(a.name < b.name) return -1
+                                if(a.name > b.name) return 1
+                                return 0
+                            }).map(e =>{
+                                return(
+                                    <option key={e.id} value={e.name}>{e.name}</option>
+                                )
+                            })}
+                        </select>
+                    </li>
+                    <li>
+                        <select onChange={e=>handleFilterOrigin(e)}>
+                            <option value="all">Todos los Perros</option>
+                            <option value='api'>Nuestros Perros</option>
+                            <option value='created'>Tus Perros</option>
+                        </select>
+                    </li>
+                    <li>
+                        <SearchBar/>
+                    </li>
+                </ul>
+            </div>
+            <h1>Buscador de Perros  /  Creador de Perros</h1>
+            <Paginado dogsPerPage={dogsPerPage} allDogs={allDogs.length} paginado={paginado} />
 
-                <select onChange={e => handleFilterByWeight(e)}>
-                    <option value="selectWeight" hidden>Ordenar por Peso</option>
-                    <option value="lightweight">De Menor a Mayor</option>
-                    <option value="heavy">De Mayor a Menor</option>
-                </select>
-
-                <select onChange={e => handleFilterCreated(e)} >
-                    <option value="allTheRaces">Todas Las Razas</option>
-                    <option value="api">Razas Existentes</option>
-                    <option value="db">Razas Creadas</option>
-                </select>
-
-                <select onChange={e => handleFilterTemperaments(e)}>
-                    <option value="all" key={0}>Temperamentos</option>
-                    {allTemperaments?.sort(function (a, b) {
-                        if (a.name < b.name) return -1
-                        if (a.name > b.name) return 1
-                        return 0
-                    }).map(ele => {
-                        return (
-                            <option key={ele.id} value={ele.name}> {ele.name}</option>
+            <div>
+                {
+                    currentDogs?.map((e)=>{
+                        return(
+                            <div key={e.id}>
+                                <Link to={'/home/' +e.id}>
+                                    <Card
+                                        name={e.name}
+                                        image={e.image}
+                                        temperaments={e.temperaments}
+                                        weightMin={e.weightMin}
+                                        weightMax={e.weightMax}
+                                        key={e.id}
+                                        />
+                                </Link>
+                            </div>
                         )
                     })
-                    }
-                </select>
-                <div>
-                    {
-                        currentDog?.map((e) => {
-                            return (
-                                <div key={e.id}>
-                                    <Link to={'/home/' + e.id}>
-                                        <Card
-                                            name={e.name}
-                                            image={e.image}
-                                            weightMin={e.weightMin}
-                                            weightMax={e.weightMax}
-                                            temperaments={e.temperaments}
-                                            key={e.id}
-                                        />
-                                    </Link>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <Paginado
-                    dogPerPage={dogPerPage}
-                    allDogs={allDogs.length}
-                    paginado={paginado}
-                />
+                }
             </div>
+            <Paginado dogsPerPage={dogsPerPage} allDogs={allDogs.lenght} paginado={paginado}/>
+            <Link to='/'><button><span>Pagina de Bienvenida</span></button></Link>
         </div>
     )
 

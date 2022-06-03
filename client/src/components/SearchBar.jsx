@@ -12,6 +12,7 @@ export default function SearchBar(){
     function handleInputChange(e){
         e.preventDefault()
         setName(e.target.value)
+        console.log(name)
     }
 
     function handleSubmit(e){
@@ -23,7 +24,7 @@ export default function SearchBar(){
     return(
         <>
             <input
-                type='test' 
+                type='text' 
                 placeholder='Busca tu raza favorita'
                 onChange={e => handleInputChange(e)}
                 value={name}
@@ -31,9 +32,9 @@ export default function SearchBar(){
                 onKeyPress={e=> e.key === 'Enter' && handleSubmit(e)}
                 />
             <button
-                type="submit"
+                type='submit'
                 onClick={e=> handleSubmit(e)}
-                className='fetch'
+                className='buscador'
                 >
                 <strong>Buscar!</strong>
                 </button>
