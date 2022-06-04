@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {getTemperaments, postDogs} from '../actions'
 import {useDispatch, useSelector} from 'react-redux'
-
+import '../styles/DogCreate.css'
 
 function validate(input){
     let errors ={}
@@ -139,15 +139,15 @@ export default function DogCreate(){
     }
 
     return (
-        <div>
-            <Link to='/home'><button> Pagina Principal</button> </Link>
-            <h1>Crea tu propia raza de perro</h1>
+        <div className="divCreate">
+            <Link to='/home'><button className="buttonHome"> Pagina Principal</button> </Link>
+            <h1 className="title">Crea tu propia raza de perro</h1>
             <form onSubmit={e => handleSubmit(e)}>
                 <div>
                     <label><strong>Nombre de la Raza: </strong></label>
                     <input type="text" value={input.name} name='name' onChange={e => handleChange(e)} />
                 {errors.name &&(
-                    <p>{errors.name}</p>
+                    <p className="error">{errors.name}</p>
                 )}
                 </div>
                 
@@ -156,7 +156,7 @@ export default function DogCreate(){
                     <input type="text" value={input.heightMin} name='heightMin' onChange={e => handleChange(e)}/>
                     <label><strong> cm.</strong></label>
                     {errors.heightMin && (
-                        <p>{errors.heightMin}</p>
+                        <p className="error">{errors.heightMin}</p>
                     )}
                 </div>
             
@@ -165,7 +165,7 @@ export default function DogCreate(){
                     <input type="text" value={input.heightMax} name='heightMax' onChange={e => handleChange(e)}/>
                     <label><strong> cm.</strong></label>
                     {errors.heightMax && (
-                        <p>{errors.heightMax}</p>
+                        <p className="error">{errors.heightMax}</p>
                     )}
                 </div>
                         
@@ -174,7 +174,7 @@ export default function DogCreate(){
                     <input type="text" value={input.weightMin} name='weightMin' onChange={e => handleChange(e)}/>
                     <label><strong> Kg.</strong></label>
                     {errors.weightMin && (
-                        <p>{errors.weightMin}</p>
+                        <p className="error">{errors.weightMin}</p>
                     )}
                 </div>
             
@@ -183,7 +183,7 @@ export default function DogCreate(){
                     <input type="text" value={input.weightMax} name='weightMax' onChange={e => handleChange(e)}/>
                     <label><strong> Kg.</strong></label>
                     {errors.weightMax && (
-                        <p>{errors.weightMax}</p>
+                        <p className="error">{errors.weightMax}</p>
                     )}
                 </div>
 
@@ -192,7 +192,7 @@ export default function DogCreate(){
                     <input type="text" value={input.life_span} name='life_span' onChange={e => handleChange(e)}/>
                     <label><strong> años</strong></label>
                     {errors.life_span && (
-                        <p>{errors.life_span}</p>
+                        <p className="error">{errors.life_span}</p>
                     )}
                 </div>
 
@@ -218,14 +218,14 @@ export default function DogCreate(){
                         return ( 
                             <ul className="allTemps" key={e}>
                                 <li>
-                                    <p><strong>{e}</strong></p>
+                                    <p className="temp"><strong>{e}</strong></p>
                                     <button onClick={() => handleDeleteTemperament(e)} className='x'>X</button>
                                 </li>
                             </ul>
                         )
                     })}
                 </div>
-                    <button type="submit" className="crear" ><strong>Crear</strong></button>
+                    <button type="submit" className="boop" ><strong>Crear</strong></button>
             
             </form>
         </div>

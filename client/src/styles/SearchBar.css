@@ -1,0 +1,31 @@
+.fetch{
+    height: 40px;
+    background-color: transparent;
+    border-radius: 8px;
+    width: 100px;
+    font-size:medium;
+    border-width: 2px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+  }
+  .fetch:hover{
+    border-width: 1px;
+    background-color: rgb(255, 255, 255);
+    color: #34495E;
+  }
+
+.input{
+    color: #ffffff;
+}
+.input:focus{
+  border-radius: 8px;
+  background-color: #34495E;
+  color: rgb(255, 255, 255);
+  border-color: white;
+}
+.input:hover{
+  border-radius: 8px;
+  background-color: #34495E;
+  color: rgb(255, 255, 255);
+  border-color: white;
+}

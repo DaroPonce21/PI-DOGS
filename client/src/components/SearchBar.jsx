@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDogs } from "../actions";
-
+import '../styles/SearchBar.css'
 
 export default function SearchBar(){
 
@@ -34,7 +34,7 @@ export default function SearchBar(){
             <button
                 type='submit'
                 onClick={e=> handleSubmit(e)}
-                className='buscador'
+                className='fetch'
                 >
                 <strong>Buscar!</strong>
                 </button>

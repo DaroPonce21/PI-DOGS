@@ -1,0 +1,44 @@
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: all 0.3s ease 0s;
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+  box-shadow: rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px;
+  padding: 4em;
+  margin: 5em;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 2em;
+  width: 15em;
+  height: 20em;
+  background-image:url(./Huesos.jpg);
+}
+
+.card:hover {
+  box-shadow: 0 12px 24px 0 rgba(0,0,0,0.2);
+  transform: scale(1.02);
+
+}
+
+.info{
+color: #000000;
+
+}
+
+
+.infoName{
+color: #000000;
+text-decoration:underline;
+}
+
+.imageDog{
+border-radius: 2em;
+width: 250px;
+height: 200px;
+}
