@@ -6,12 +6,16 @@ const { YOUR_API_KEY } = process.env;
 const { Race, Temperament } = require('../db')
 require('dotenv').config();
 
+
+
 const { getAllDogs } = require('../controllers/getAllDogs')
 
 const router = Router()
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+
+//Nos trae todos los perros o el que llega por nombre en el Query
 
 router.get('/dogs', async (req, res, next) => {
     try {
@@ -22,7 +26,7 @@ router.get('/dogs', async (req, res, next) => {
             dogName.length ?
                 res.status(200).send(dogName) :
                 res.send([{
-                    name: 'Perdon, la raza no esta en nuestra base de datos.', id: '', temperaments: 'Puede crearla en nuestro "Creador de Perros"', imagen: 'https://c.tenor.com/TUJ_WGkQ6pcAAAAC/dog-computer.gif'
+                    name: 'Perdon, la raza no esta en nuestra base de datos.', id: '', temperaments: 'Puede crearla en nuestro "Creador de Perros"', image: 'https://e7.pngegg.com/pngimages/741/723/png-clipart-adult-white-and-brown-jack-russell-terrier-using-magnifying-glass-search-and-rescue-dog-puppy-dog-training-pet-pets-animals-dog-like-mammal.png'
                 }]);
         } else {
             res.status(200).send(allDogs)
@@ -111,5 +115,7 @@ router.post('/dogs', async (req, res) => {
     raceCreated.addTemperament(temperamentDB)
     res.status(200).send('Felicitaciones, Mr. Stark, ha creado una nueva raza')
 })
+
+
 
 module.exports = router;
