@@ -6,8 +6,8 @@
   transition-timing-function: ease;
   transition-delay: 0s;
   box-shadow: rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px;
-  padding: 4em;
-  margin: 5em;
+  padding: 3em;
+  margin: 2em;
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
@@ -15,8 +15,10 @@
   -webkit-box-align: center;
   align-items: center;
   border-radius: 2em;
-  width: 15em;
-  height: 20em;
+  width: 21em;
+  height: 27em;
+  /*width: 40em;
+  height: 45em;*/
   background-image:url(./Huesos.jpg);
 }
 
@@ -27,14 +29,18 @@
 }
 
 .info{
-color: #000000;
-
+  color: #000000;
+  background-color: #5a71888c;
+  border-radius: 2em;
+  padding: 0.25em;
 }
 
 
 .infoName{
-color: #000000;
-text-decoration:underline;
+  color: #000000;
+  background-color: #5a71886d;
+  border-radius: 2em;
+  padding: 0.25em;
 }
 
 .imageDog{

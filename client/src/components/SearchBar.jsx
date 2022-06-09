@@ -18,8 +18,11 @@ export default function SearchBar(){
     function handleSubmit(e){
         e.preventDefault()
         var found = getDogs(name)
+        if(!name){
+            alert('Ingrese una raza para buscar')
+        }else{
         dispatch(found)
-        setName('')
+        setName('')}
     }
     return(
         <>

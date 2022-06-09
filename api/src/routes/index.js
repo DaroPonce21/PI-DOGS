@@ -3,12 +3,13 @@ const { Router } = require('express');
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require('axios');
 const { YOUR_API_KEY } = process.env;
-const { Race, Temperament } = require('../db')
+const { Race, Temperament, /*Origin*/ } = require('../db')
 require('dotenv').config();
 
 
 
-const { getAllDogs } = require('../controllers/getAllDogs')
+const { getAllDogs } = require('../controllers/getAllDogs');
+
 
 const router = Router()
 
@@ -96,6 +97,9 @@ router.post('/dogs', async (req, res) => {
         life_span,
         image,
         temperaments,
+        //origins,
+        //bredFor,
+        //breedGroups,
 
     } = req.body
     let raceCreated = await Race.create({
@@ -106,16 +110,70 @@ router.post('/dogs', async (req, res) => {
         weightMax,
         life_span: life_span + ' años',
         image,
+        //bredFor,
+        //breedGroups,
     })
     let temperamentDB = await Temperament.findAll({
         where: {
             name: temperaments
         }
     })
+
+
     raceCreated.addTemperament(temperamentDB)
-    res.status(200).send('Felicitaciones, Mr. Stark, ha creado una nueva raza')
+    res.status(200).send('Raza creada')
+
+
+
 })
 
 
-
 module.exports = router;
+
+
+ 
+    /*
+    let originsDB = await Origin.findAll({
+        where:{
+            name: origins
+        }
+    })
+    */
+
+ 
+ //   raceCreated.addOrigin(originsDB)
+//   res.status(200).send('Raza creada')
+
+
+/*
+router.get('/origin', async (req, res, next) => {
+    let infoApi = await axios(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
+    let oringisRepeated = infoApi.data.map(e => e.origin).toString();
+    oringisRepeated = await oringisRepeated.split(',')
+    const originsConEspacios = await oringisRepeated.map(e => {
+        if (e[0] == ' ') {
+            return e.split('');
+        }
+        return e;
+    });
+    const originsSinEspacios = await originsConEspacios.map(e => {
+        if (Array.isArray(e)) {
+            e.shift();
+            return e.join('');
+        }
+        return e;
+    })
+    await originsSinEspacios.forEach(e => {
+        if (e != '') {
+            Origin.findOrCreate({
+                where: {
+                    name: e,
+                }
+            })
+        }
+    });
+    const allOrigins = await Origin.findAll()
+    res.status(200).send(allOrigins)
+
+});
+*/

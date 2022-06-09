@@ -43,6 +43,18 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: true
     },
+/*
+    bredFor:{
+      type: DataTypes.STRING,
+      allowNull: true,
+
+    },
+
+    breedGroup:{
+      type: DataTypes.STRING,
+      allowNull: true
+    }
+    */
   },
     { timestamps: false }
   );

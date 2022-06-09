@@ -8,63 +8,100 @@ const getApiInfo = async () => {
             id: e.id,
 
             name: e.name !== null ? e.name : 'Raza PP'
-            
+
             ,
 
-            heightMin: e.height.metric.split('-')[0] !== 'NaN' ?
+            heightMin: e.height.metric.split('-')[0] && e.height.metric.split('-')[0] !== 'NaN' ?
                 e.height.metric.split(' - ')[0] :
-                (e.height.imperial.split('-')[0] ?
+                (e.height.imperial.split('-')[0] && e.height.imperial.split('-')[0] !== 'NaN' ?
                     Math.round(e.height.imperial.split('-')[0] / 2.205).toString() :
-                    (e.height.metric.split(' - ')[1] ?
-                        Math.round(e.height.metric.split('-')[1] * 0.6.toString()) :
-                        (e.height.imperial.split('-')[1] ?
-                            Math.round(e.height.metric.split('-')[1] * 0.6 / 2.205.toString()) :
+                    (e.height.metric.split(' - ')[1] && e.height.metric.split(' - ')[1] !== 'NaN' ?
+                        Math.round(e.height.metric.split('-')[1] * 0.6).toString() :
+                        (e.height.imperial.split('-')[1] && e.height.imperial.split('-')[1] !== 'NaN' ?
+                            Math.round(e.height.metric.split('-')[1] * 0.6 / 2.205).toString() :
                             'No tenemos Altura Minima para ese Perro')))
             ,
 
-            heightMax: e.height.metric.split('-') !== 'NaN' ?
+            heightMax: e.height.metric.split('-')[1] && e.height.metric.split('-')[1] !== 'NaN' ?
                 e.height.metric.split(' - ')[1] :
-                (e.height.imperial.split('-')[1] ?
+                (e.height.imperial.split('-')[1] && e.height.imperial.split('-')[1] !== 'NaN' ?
                     Math.round(e.height.imperial.split('-')[1] / 2.205).toString() :
-                    (e.height.metric.split(' - ')[0] ?
-                        Math.round(e.height.metric.split('-')[0] * 1.1.toString()) :
-                        (e.height.imperial.split('-')[0] ?
-                            Math.round(e.height.metric.split('-')[0] * 1.1 / 2.205.toString()) :
+                    (e.height.metric.split(' - ')[0] && e.height.metric.split(' - ')[0] !== 'NaN' ?
+                        Math.round(e.height.metric.split('-')[0] * 1.1).toString() :
+                        (e.height.imperial.split('-')[0] && e.height.imperial.split('-')[0] !== 'NaN' ?
+                            Math.round(e.height.metric.split('-')[0] * 1.1 / 2.205).toString() :
                             'No tenemos Altura Maxima para ese Perro')))
 
             ,
 
-            weightMin: e.weight.metric.split('-')[0] !== 'NaN' ?
+            weightMin: e.weight.metric.split('-')[0] && e.weight.metric.split('-')[0] !== 'NaN' ?
                 e.weight.metric.split(' - ')[0] :
-                (e.weight.imperial.split('-')[0] ?
+                (e.weight.imperial.split('-')[0] && e.weight.imperial.split('-')[0] !== 'NaN' ?
                     Math.round(e.weight.imperial.split('-')[0] / 2.205).toString() :
-                    (e.weight.metric.split(' - ')[1] ?
-                        Math.round(e.weight.metric.split('-')[1] * 0.6.toString()) :
-                        (e.weight.imperial.split('-')[1] ?
-                            Math.round(e.weight.metric.split('-')[1] * 0.6 / 2.205.toString()) :
+                    (e.weight.metric.split(' - ')[1] && e.weight.metric.split('-')[1] !== 'NaN' ?
+                        Math.round(e.weight.metric.split('-')[1] * 0.6).toString() :
+                        (e.weight.imperial.split('-')[1] && e.weight.imperial.split('-')[1] !== 'NaN' ?
+                            Math.round(e.weight.metric.split('-')[1] * 0.6 / 2.205).toString() :
                             'No tenemos Peso Minimo para ese Perro')))
             ,
 
-            weightMax: e.weight.metric.split('-') !== 'NaN' ?
+            weightMax: e.weight.metric.split('-')[1] && e.weight.metric.split('-')[1] !== 'NaN' ?
                 e.weight.metric.split(' - ')[1] :
-                (e.weight.imperial.split('-')[1] ?
+                (e.weight.imperial.split('-')[1] && e.weight.imperial.split('-')[1] !== 'NaN' ?
                     Math.round(e.weight.imperial.split('-')[1] / 2.205).toString() :
-                    (e.weight.metric.split(' - ')[0] ?
-                        Math.round(e.weight.metric.split('-')[0] * 1.1.toString()) :
-                        (e.weight.imperial.split('-')[0] ?
-                            Math.round(e.weight.metric.split('-')[0] * 1.1 / 2.205.toString()) :
+                    (e.weight.metric.split(' - ')[0] && e.weight.metric.split(' - ')[0] !== 'NaN' ?
+                        Math.round(e.weight.metric.split('-')[0] * 1.1).toString() :
+                        (e.weight.imperial.split('-')[0] && e.weight.imperial.split('-')[0] !== 'NaN' ?
+                            Math.round(e.weight.metric.split('-')[0] * 1.1 / 2.205).toString() :
                             'No tenemos Peso Maximo para ese Perro')))
 
 
             ,
-            life_span: e.life_span !== null ? e.life_span : 'Esperanza de vida no encontrada' ,
+            life_span: e.life_span !== null ? e.life_span : 'Esperanza de vida no encontrada',
 
-            temperaments: e.temperament ? e.temperament : null,
+            temperaments: e.temperament ? e.temperament : 'Sin datos de temperamentos',
 
             image: e.image.url,
+
+            //origins: e.origin ? e.origin : 'Sin datos del pais de origen',
+
+            //bredFor: e.bred_for ? e.bred_for : 'Dar amor',
+
+            //breedGroups: e.breed_group ? e.breed_group : 'Sin sub-grupo',
+
         }
     });
     return apiInfo;
 }
 
-module.exports ={getApiInfo}
+/*
+Promesas
+
+const getApiInfo = () => {
+    const apiUrl = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
+        .then(res => res.data.map(el => {
+            return {
+                id: el.id,
+                name: el.name,
+                heightMin: el.height.metric.split(' - ')[0],
+                heightMax: el.height.metric.split(' - ')[1] ?
+                    el.height.metric.split(' - ')[1] :
+                    Math.round(el.height.metric.split(' - ')[0] * 1.1),
+                weightMin: el.weight.metric.split(' - ')[0] !== "NaN" ?
+                    el.weight.metric.split(' - ')[0] :
+                    (el.weight.metric.split(' - ')[1] ?
+                        Math.round(el.weight.metric.split(' - ')[1] * 0.6) :
+                        '30'),//Math.round(el.weight.imperial.split(' - ')[1] * 0.6 / 2.205).toString()),
+                weightMax: el.weight.metric.split(' - ')[1] ?
+                    el.weight.metric.split(' - ')[1] :
+                    '39',//Math.round(parseInt(el.weight.imperial.split(' - ')[1]) / 2.205).toString(),
+                life_span: el.life_span,
+                temperaments: el.temperament ? el.temperament : null,
+                image: el.image.url,
+            }
+        }));
+    return apiUrl
+
+*/
+
+module.exports = { getApiInfo }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDogs, getTemperaments, filterDogsByTemperament, filterDogsByOrigin, sortByName, sortByWeight } from '../actions'
+import { getDogs, getTemperaments, filterDogsByTemperament, filterDogsByOrigin, sortByName, sortByWeight, /*filterDogsByCountry, getDogsByCountry, sortByHeight*/ } from '../actions'
 import { Link } from 'react-router-dom'
 import Card from './Card.jsx'
 import Paginado from './Paginado.jsx'
@@ -15,6 +15,7 @@ export default function Home() {
 
     const allDogs = useSelector((state) => state.dogs)
     const allTemperaments = useSelector((state) => state.temperaments)
+    //const allCountry = useSelector((state) => state.origins)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [dogsPerPage, /*_setDogCurrentPerPage*/] = useState(8)
@@ -35,7 +36,11 @@ export default function Home() {
     useEffect(() => {
         dispatch(getTemperaments())
     }, [dispatch])
-
+    /*
+        useEffect(() => {
+            dispatch(getDogsByCountry())
+        }, [dispatch])
+    */
     function handleClick(e) {
         e.preventDefault();
         dispatch(getDogs())
@@ -68,6 +73,21 @@ export default function Home() {
         setOrden(`Ordenado ${e.target.value}`)
     }
 
+    /*
+        function handleSortByHeight(e) {
+            e.preventDefault()
+            dispatch(sortByHeight(e.target.value))
+            setCurrentPage(1)
+            setOrden(`Ordenado ${e.target.value}`)
+        }
+    */
+    /*
+        function handleFilterCountry(e) {
+            e.preventDefault()
+            setCurrentPage(1)
+            dispatch(filterDogsByCountry(e.target.value))
+        }
+    */
     return (
         <div className='home'>
             <div className='divNB'>
@@ -85,6 +105,17 @@ export default function Home() {
                             <option value="ZYX">Z - A</option>
                         </select>
                     </li>
+
+                    {/*
+                        <li className='content-select'>
+                        <select onChange={e => handleSortByHeight(e)}>
+                            <option value="selected" hidden className='elementNB'>Ordenado por Altura</option>
+                            <option value="asc">Mas Bajos</option>
+                            <option value="desc">Mas Altos</option>
+                        </select>
+                    </li>
+                        */}
+
                     <li className='content-select'>
                         <select onChange={e => handleSortByWeight(e)}>
                             <option value="selected" hidden className='elementNB'>Ordenado por Peso</option>
@@ -113,6 +144,25 @@ export default function Home() {
                             <option value='created'>Tus Perros</option>
                         </select>
                     </li>
+
+                    {/*
+                    <li className='content-select'>
+                        <select onChange={e => handleFilterCountry(e)}>
+                            <option key={0} value='all'>Todos los Paises</option>
+                            {allCountry?.sort(function (a, b) {
+                                if (a.name < b.name) return -1
+                                if (a.name > b.name) return 1
+                                return 0
+                            }).map(e => {
+                                return (
+                                    <option key={e.id} value={e.name}>{e.name}</option>
+                                )
+                            })}
+                        </select>
+                        </li>
+                        
+                        */}
+
                     <li>
                         <SearchBar />
                     </li>
@@ -133,6 +183,11 @@ export default function Home() {
                                         temperaments={e.temperaments}
                                         weightMin={e.weightMin}
                                         weightMax={e.weightMax}
+                                        //heightMin={e.heightMin}
+                                        // heightMax={e.heightMax}
+                                        // origin={e.origins}
+                                        // bredFor={e.bredFor} 
+                                        //breedGroups={e.breedGroups}
                                         key={e.id}
                                     />
                                 </Link>
@@ -141,6 +196,7 @@ export default function Home() {
                     })
                 }
             </div>
+            
             <Paginado dogsPerPage={dogsPerPage} allDogs={allDogs.lenght} paginado={paginado} />
             <Link to='/'><button className='welcome'><span>Pagina de Bienvenida</span></button></Link>
         </div>

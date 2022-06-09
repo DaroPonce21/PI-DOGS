@@ -45,15 +45,15 @@ input:focus{
     color: white;
 }
 
-.allTemps{
+.allSelecction{
    display: inline-block;
 
 }
-.allTemps li{
+.allSelecction li{
     justify-content: center;
     display: inline;
 }
-.temp{
+.selecction{
     font-size: medium;
     color: white;
     margin: 10px;

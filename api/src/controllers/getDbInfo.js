@@ -1,4 +1,5 @@
-const {Race, Temperament} = require('../db')
+const {Race, Temperament, Origin} = require('../db')
+
 
 const getDbInfo = async () =>{
     return await Race.findAll({
@@ -8,8 +9,18 @@ const getDbInfo = async () =>{
             throught:{
                 attributes:[]
             }
+        },
+       /*
+        include:{
+            model: Origin,
+            attributes: ['name'],
+            throught:{
+                attributes:[]
+            }
         }
+      */
     })
+   
 }
 
 module.exports={ getDbInfo}

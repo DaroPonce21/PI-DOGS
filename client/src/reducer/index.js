@@ -1,11 +1,14 @@
-import { 
-    GET_DOGS, 
-    GET_TEMPERAMENTS, 
-    FILTER_BY_TEMPERAMENT, 
-    SORT_BY_NAME, 
-    FILTER_BY_ORIGIN, 
-    SORT_BY_WEIGHT, 
-    GET_DETAIL 
+import {
+    GET_DOGS,
+    GET_TEMPERAMENTS,
+    FILTER_BY_TEMPERAMENT,
+    SORT_BY_NAME,
+    FILTER_BY_ORIGIN,
+    SORT_BY_WEIGHT,
+    GET_DETAIL,
+    //GET_COUNTRY,
+    //FILTER_BY_COUNTRY,
+    SORT_BY_HEIGHT
 } from "../actions"
 
 const initialState = {
@@ -24,6 +27,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 dogs: action.payload,
                 allDogs: action.payload,
+                detail: []
             }
         case GET_TEMPERAMENTS:
             return {
@@ -46,12 +50,12 @@ function rootReducer(state = initialState, action) {
             }
 
         case FILTER_BY_ORIGIN:
-                const all = state.allDogs
-                const originFiltered = action.payload === 'all' ? all : action.payload === 'created' ? all.filter(e => e.CreatedInDB) : all.filter(e => !e.CreatedInDB)
-                return {
-                    ...state,
-                    dogs: originFiltered
-                }
+            const all = state.allDogs
+            const originFiltered = action.payload === 'all' ? all : action.payload === 'created' ? all.filter(e => e.CreatedInDB) : all.filter(e => !e.CreatedInDB)
+            return {
+                ...state,
+                dogs: originFiltered
+            }
 
         case SORT_BY_NAME:
             const sortedName = action.payload === 'ABC' ?
@@ -90,18 +94,54 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 dogs: sortedWeight,
             }
+
+        case SORT_BY_HEIGHT:
+            const sortedHeight = action.payload === 'asc' ?
+                state.dogs.sort(function (a, b) {
+                    return parseInt(a.heightMin) - parseInt(b.heightMin)
+                }) :
+                state.dogs.sort(function (a, b) {
+                    return parseInt(b.heightMax) - parseInt(a.heightMax)
+                })
+            return {
+                ...state,
+                dogs: sortedHeight,
+            }
+
         case GET_DETAIL:
             return {
                 ...state,
                 detail: action.payload
             }
         case 'POST_DOGS':
-            return{
+            return {
                 ...state,
             }
+/*
+        case GET_COUNTRY:
+            return {
+                ...state,
+                origins: action.payload
+            }
+        case FILTER_BY_COUNTRY:
+            const allDogs2 = state.allDogs
+            const originsFiltered = action.payload === 'all' ? allDogs2 : allDogs2.filter(e => {
+                if (typeof (e.origins) === 'string') return e.origins.includes(action.payload)
+                if (Array.isArray(e.origins)) {
+                    let origs = e.origins.map(e => e.name)
+                    return origs.includes(action.payload)
+                }
+                return true
+            })
+            return {
+                ...state,
+                dogs: originsFiltered
+            }
+*/
         default:
             return state
     }
+
 }
 
 export default rootReducer
