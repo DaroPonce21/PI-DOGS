@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from '../actions'
+import { getDetail} from '../actions'
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import '../styles/Detail.css'
@@ -10,10 +10,10 @@ export default function Detail(props) {
 
     const dispatch = useDispatch()
     const { id } = useParams()
-
+ 
     useEffect(() => {
-        dispatch(getDetail(id))
-    }, [dispatch, id])
+         dispatch(getDetail(id))
+     }, [dispatch, id])
 
     const myDog = useSelector((state) => state.detail)
 
@@ -23,6 +23,9 @@ export default function Detail(props) {
             <Link to='/dogs'>
                 <button className="buttonHome1">Crear Perro</button>
             </Link>
+            
+
+           
             {
                 myDog.length > 0 ?
                     <div>
@@ -47,15 +50,16 @@ export default function Detail(props) {
                                                 }) :
                                                 'Esta raza no posee temperamentos'
                                         }
-                
+
                                     </ul>
-                                                                               
+
                                     <h4 className="caracts">Altura entre: </h4>
                                     <p>{myDog[0].heightMin} a {myDog[0].heightMax} Cm.</p>
                                     <h4 className="caracts">Peso entre:</h4>
                                     <p>{myDog[0].weightMin} a {myDog[0].weightMax} Kg.</p>
                                     <h4 className="caracts">Esperanza de vida:</h4>
                                     <p className="last">{myDog[0].life_span}</p>
+      
                                 </div>
                             </li>
                         </ul>
@@ -64,6 +68,7 @@ export default function Detail(props) {
                         <h1><strong>Cargando...</strong></h1>
                     </div>
             }
+
         </div>
     )
 }
@@ -168,4 +173,20 @@ export default connect(
     mapDispatchToProps
 )(Detail); 
 
+*/
+
+
+  /* 
+    function handleDelete(e) {
+        if (id.length > 5) {
+            e.preventDefault()
+            dispatch(deleteDog(id))
+            dispatch(cleaner())
+            alert('La raza fue eliminada')
+            navigate('/home')
+        }else{
+            alert('Solo podemos eliminar las razas creadas por usted.')
+        }
+    }
+            <button onClick={(e) => handleDelete(e)}>Borrar Perro</button> 
 */

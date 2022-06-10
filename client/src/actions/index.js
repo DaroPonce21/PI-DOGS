@@ -73,14 +73,14 @@ export function sortByWeight(payload) {
         payload
     }
 }
-
+/*
 export function sortByHeight(payload) {
     return {
         type: SORT_BY_HEIGHT,
         payload
     }
 }
-
+*/
 
 export function getDetail(id) {
     return async function (dispatch) {
@@ -113,8 +113,6 @@ export function getDetail(id){
  }
 */
 
-
-
 export function postDogs(payload) {
     return async function (dispatch) {
         const response = await axios.post('http://localhost:3001/dogs', payload)
@@ -123,6 +121,8 @@ export function postDogs(payload) {
     }
 
 }
+
+ 
 /*
 export function getDogsByCountry() {
     return async function (dispatch) {
@@ -141,3 +141,51 @@ export function filterDogsByCountry(payload) {
     }
 }
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+export const DELETED_DOG = 'DELETED_DOG'
+export const CLEAN_DOG = 'CLEAN_DOG'
+export const CLEANER = 'CLEANER'
+
+export function deleteDog(id) {
+    return async function (dispatch) {
+      try {
+        const deleteDog = await axios.delete(`http://localhost:3001/clear/${id}`);
+        return dispatch({
+          type: DELETED_DOG,
+          payload: deleteDog,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }
+
+  
+export function cleanDog() {
+    return {
+      type: CLEAN_DOG,
+      payload: {},
+    };
+  }
+  
+  export function cleaner() {
+    return {
+      type: CLEANER,
+      payload: {},
+    };
+  }
+ */

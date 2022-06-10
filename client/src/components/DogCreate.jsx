@@ -84,7 +84,6 @@ function validate(input) {
     }
 
 
-
     /*else if (!isNaN(input.bredFor)){
         errors.bredFor = 'Solo se admite texto'
         

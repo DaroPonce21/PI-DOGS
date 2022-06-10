@@ -6,16 +6,17 @@ import {
     FILTER_BY_ORIGIN,
     SORT_BY_WEIGHT,
     GET_DETAIL,
-    //GET_COUNTRY,
-    //FILTER_BY_COUNTRY,
-    SORT_BY_HEIGHT
+   //GET_COUNTRY,
+   //FILTER_BY_COUNTRY,
+   //SORT_BY_HEIGHT
 } from "../actions"
 
 const initialState = {
     dogs: [],
     allDogs: [],
     temperaments: [],
-    detail: []
+    detail: [],
+
 }
 
 
@@ -27,7 +28,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 dogs: action.payload,
                 allDogs: action.payload,
-                detail: []
+                
             }
         case GET_TEMPERAMENTS:
             return {
@@ -95,6 +96,25 @@ function rootReducer(state = initialState, action) {
                 dogs: sortedWeight,
             }
 
+        case GET_DETAIL:
+            return {
+                ...state,
+                detail: action.payload
+            }
+        case 'POST_DOGS':
+            return {
+                ...state,
+            }
+
+        default:
+            return state
+    }
+
+}
+
+export default rootReducer
+
+/*
         case SORT_BY_HEIGHT:
             const sortedHeight = action.payload === 'asc' ?
                 state.dogs.sort(function (a, b) {
@@ -107,16 +127,8 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 dogs: sortedHeight,
             }
+*/
 
-        case GET_DETAIL:
-            return {
-                ...state,
-                detail: action.payload
-            }
-        case 'POST_DOGS':
-            return {
-                ...state,
-            }
 /*
         case GET_COUNTRY:
             return {
@@ -138,10 +150,27 @@ function rootReducer(state = initialState, action) {
                 dogs: originsFiltered
             }
 */
-        default:
-            return state
+/*
+DELETED_DOG,
+CLEANER,
+CLEAN_DOG,
+
+
+case DELETED_DOG:
+    return {
+        ...state,
     }
+case CLEANER:
+    return {
+        ...state,
+        details: {},
+    };
+case CLEAN_DOG:
+    return {
+        ...state,
+        loader: true,
+    };
 
-}
+    loader: true
 
-export default rootReducer
+    */

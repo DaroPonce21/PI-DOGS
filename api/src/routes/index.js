@@ -46,7 +46,7 @@ router.get('/dogs/:raceId', async (req, res, next) => {
         let race = await allRaces.filter(e => e.id == raceId);
         race.length ?
             res.status(200).json(race) :
-            res.status(404).send(`Perdon, el ID '${raceId}' No aparece`)
+            res.status(404).json(`Perdon, el ID '${raceId}' No aparece`)
     }
 })
 
@@ -55,33 +55,22 @@ router.get('/dogs/:raceId', async (req, res, next) => {
 
 router.get('/temperament', async (req, res, next) => {
     let infoApi = await axios(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
-    let tempsRepeated = infoApi.data.map(e => e.temperament).toString();
-    tempsRepeated = await tempsRepeated.split(',')
-    const tempsConEspacios = await tempsRepeated.map(e => {
-        if (e[0] == ' ') {
-            return e.split('');
-        }
-        return e;
-    });
-    const tempsSinEspacios = await tempsConEspacios.map(e => {
-        if (Array.isArray(e)) {
-            e.shift();
-            return e.join('');
-        }
-        return e;
-    })
-    await tempsSinEspacios.forEach(e => {
-        if (e != '') {
+    try {
+        let allTemperament = infoApi.data.map(allDogs => allDogs.temperament ? allDogs.temperament : 'no temperament').join(',').split(',')
+        let filterTemperament = allTemperament.filter(temper => temper !== 'no temperament')
+        let eTemper = [... new Set(filterTemperament)]
+        eTemper.forEach(temper =>{
             Temperament.findOrCreate({
-                where: {
-                    name: e,
-                }
+                where:{name: temper}
             })
-        }
-    });
-    const allTemps = await Temperament.findAll()
-    res.status(200).send(allTemps)
-});
+        })
+        let temperDB = await Temperament.findAll()
+        res.status(200).send(temperDB)
+    } catch (error) {
+        res.status(404).send(error)
+        
+    }
+})
 
 
 
@@ -127,23 +116,10 @@ router.post('/dogs', async (req, res) => {
 
 })
 
-
 module.exports = router;
 
 
  
-    /*
-    let originsDB = await Origin.findAll({
-        where:{
-            name: origins
-        }
-    })
-    */
-
- 
- //   raceCreated.addOrigin(originsDB)
-//   res.status(200).send('Raza creada')
-
 
 /*
 router.get('/origin', async (req, res, next) => {
@@ -177,3 +153,111 @@ router.get('/origin', async (req, res, next) => {
 
 });
 */
+
+
+/*
+    let originsDB = await Origin.findAll({
+        where:{
+            name: origins
+        }
+    })
+*/
+
+ 
+//   raceCreated.addOrigin(originsDB)
+//   res.status(200).send('Raza creada')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+router.get('/temperament', async (req, res, next) => {
+    let infoApi = await axios(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`)
+    let tempsRepeated = infoApi.data.map(e => e.temperament).toString();
+    tempsRepeated = await tempsRepeated.split(',')
+    const tempsConEspacios = await tempsRepeated.map(e => {
+        if (e[0] == ' ') {
+            return e.split('');
+        }
+        return e;
+    });
+    const tempsSinEspacios = await tempsConEspacios.map(e => {
+        if (Array.isArray(e)) {
+            e.shift();
+            return e.join('');
+        }
+        return e;
+    })
+    await tempsSinEspacios.forEach(e => {
+        if (e != '') {
+            Temperament.findOrCreate({
+                where: {
+                    name: e,
+                }
+            })
+        }
+    });
+    const allTemps = await Temperament.findAll()
+    res.status(200).send(allTemps)
+});
+*/
+
+
+/*
+
+
+router.delete("/:id", async function (req, res) {
+    const { id } = req.params;
+    try {
+      if (id) {
+        await Race.destroy({
+          where: { id: id },
+        });
+        res.send({ msg: "Dog deleted" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  */
