@@ -6,8 +6,6 @@ const { YOUR_API_KEY } = process.env;
 const { Race, Temperament, /*Origin*/ } = require('../db')
 require('dotenv').config();
 
-
-
 const { getAllDogs } = require('../controllers/getAllDogs');
 
 
@@ -16,6 +14,8 @@ const router = Router()
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+
+// ------------------------------------------------------------GET ALL o GET NAME -------------------------------------------------------------------------
 //Nos trae todos los perros o el que llega por nombre en el Query
 
 router.get('/dogs', async (req, res, next) => {
@@ -37,6 +37,8 @@ router.get('/dogs', async (req, res, next) => {
     }
 })
 
+//------------------------------------------------------------ GET ID -------------------------------------------------------------------------
+
 // Segun el ID que recibo por parametros nos devuelve el perro o el error
 
 router.get('/dogs/:raceId', async (req, res, next) => {
@@ -50,6 +52,8 @@ router.get('/dogs/:raceId', async (req, res, next) => {
     }
 })
 
+
+//------------------------------------------------------------ GET TEMPERAMENT -------------------------------------------------------------------------
 
 //Nos devuelve los Temperamentos
 
@@ -72,6 +76,7 @@ router.get('/temperament', async (req, res, next) => {
     }
 })
 
+//------------------------------------------------------------ POST NUEVO PERRO -------------------------------------------------------------------------
 
 
 // Nos permite crear el perro
@@ -112,14 +117,29 @@ router.post('/dogs', async (req, res) => {
     raceCreated.addTemperament(temperamentDB)
     res.status(200).send('Raza creada')
 
-
-
 })
+
+//------------------------------------------------------------ DELETE PERRO -------------------------------------------------------------------------
+
+router.delete("/:id", async function (req, res) {
+    const { id } = req.params;
+    try {
+      if (id) {
+        await Race.destroy({
+          where: { id: id },
+        });
+        res.send({ msg: "Dog deleted" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
 module.exports = router;
 
 
- 
+//---------------------------------------------GET ORIGIN (extra por si queremos traer los paises de cada raza) -------------------------------------------------------------------------
+
 
 /*
 router.get('/origin', async (req, res, next) => {
@@ -168,6 +188,7 @@ router.get('/origin', async (req, res, next) => {
 //   res.status(200).send('Raza creada')
 
 
+//-------------------------------------------------------------------------------------------------------------------------------------
 
 
 

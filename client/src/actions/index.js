@@ -8,9 +8,13 @@ export const SORT_BY_NAME = 'SORT_BY_NAME'
 export const SORT_BY_WEIGHT = 'SORT_BY_WEIGHT'
 export const GET_DETAIL = 'GET_DETAIL'
 export const SEARCH_FAIL = 'SEARCH_FAIL'
+export const SORT_BY_HEIGHT = 'SORT_BY_HEIGHT'
+export const DELETED_DOG = 'DELETED_DOG'
+export const CLEAN_DOG = 'CLEAN_DOG'
+export const CLEANER = 'CLEANER'
+
 //export const GET_COUNTRY= 'GET_COUNTRY'
 //export const FILTER_BY_COUNTRY = 'FILTER_BY_COUNTRY'
-export const SORT_BY_HEIGHT = 'SORT_BY_HEIGHT'
 
 export function getDogs(name) {
     return async function (dispatch) {
@@ -122,7 +126,37 @@ export function postDogs(payload) {
 
 }
 
- 
+
+export function deleteDog(id) {
+    return async function (dispatch) {
+        try {
+            const deleteDog = await axios.delete(`http://localhost:3001/${id}`);
+            return dispatch({
+                type: DELETED_DOG,
+                payload: deleteDog,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+}
+
+
+export function cleanDog() {
+    return {
+        type: CLEAN_DOG,
+        payload: {},
+    };
+}
+
+export function cleaner() {
+    return {
+        type: CLEANER,
+        payload: {},
+    };
+}
+
+
 /*
 export function getDogsByCountry() {
     return async function (dispatch) {

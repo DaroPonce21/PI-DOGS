@@ -1,3 +1,5 @@
+// Extra para crear los origenes de los perros como se hace con los temperamentos
+
 const { DataTypes } = require('sequelize');
 
 // Exportamos una funcion que define el modelo

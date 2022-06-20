@@ -18,8 +18,12 @@ export default function SearchBar(){
     function handleSubmit(e){
         e.preventDefault()
         var found = getDogs(name)
+        if(!name){
+            return alert('Debe ingresar nombre')
+        }
         dispatch(found)
-        setName('')}
+        setName('')
+    }
     
     return(
         <>

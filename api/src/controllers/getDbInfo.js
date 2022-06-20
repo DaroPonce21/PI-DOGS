@@ -1,3 +1,5 @@
+// Nos traemos lo de la DB (origin es extra)
+
 const {Race, Temperament, Origin} = require('../db')
 
 

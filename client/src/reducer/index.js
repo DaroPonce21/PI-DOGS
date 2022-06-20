@@ -6,9 +6,12 @@ import {
     FILTER_BY_ORIGIN,
     SORT_BY_WEIGHT,
     GET_DETAIL,
-   //GET_COUNTRY,
-   //FILTER_BY_COUNTRY,
-   //SORT_BY_HEIGHT
+    //GET_COUNTRY,
+    //FILTER_BY_COUNTRY,
+    //SORT_BY_HEIGHT
+    DELETED_DOG,
+    CLEANER,
+    CLEAN_DOG,
 } from "../actions"
 
 const initialState = {
@@ -16,6 +19,8 @@ const initialState = {
     allDogs: [],
     temperaments: [],
     detail: [],
+
+    loader: true
 
 }
 
@@ -28,7 +33,8 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 dogs: action.payload,
                 allDogs: action.payload,
-                
+                detail: []
+
             }
         case GET_TEMPERAMENTS:
             return {
@@ -105,10 +111,30 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
             }
+        case DELETED_DOG:
+            return {
+                ...state,
+            }
+        case CLEANER:
+            return {
+                ...state,
+                details: {},
+            };
+        case CLEAN_DOG:
+            return {
+                ...state,
+                loader: true,
+            };
 
         default:
             return state
     }
+
+
+
+
+
+
 
 }
 

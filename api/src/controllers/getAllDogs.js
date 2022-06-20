@@ -1,3 +1,5 @@
+//Sumamos las 2 informaciones, la de la API y la de la DB
+
 const {getApiInfo} = require('./getApiInfo')
 const {getDbInfo} = require('./getDbInfo')
 

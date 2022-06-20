@@ -30,6 +30,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
+
+// ---------------------------------  Nos traemos las DBs (origin Extra)--------------------------------
 const { Race, Temperament, /*Origin*/  } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -37,6 +39,8 @@ const { Race, Temperament, /*Origin*/  } = sequelize.models;
 Race.belongsToMany(Temperament, {through : 'race_temperament'});
 Temperament.belongsToMany(Race, {through: 'race_temperament'});
 /*
+ ------------------------------ extra---------------------------------
+
 Race.belongsToMany(Origin, {through : 'race_origin'})
 Origin.belongsToMany(Race, {through : 'race_origin'})
 */

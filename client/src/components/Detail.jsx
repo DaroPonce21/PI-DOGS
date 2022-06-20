@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail} from '../actions'
+import { getDetail, cleaner, cleanDog, deleteDog} from '../actions'
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import '../styles/Detail.css'
@@ -10,12 +10,31 @@ export default function Detail(props) {
 
     const dispatch = useDispatch()
     const { id } = useParams()
+    const navigate = useNavigate()
  
     useEffect(() => {
          dispatch(getDetail(id))
+         dispatch(cleaner())
+         dispatch(cleanDog())
      }, [dispatch, id])
 
+
+
     const myDog = useSelector((state) => state.detail)
+
+    function handleDelete(e) {
+        if (id.length > 5) {
+            e.preventDefault()
+            dispatch(cleanDog())
+            dispatch(deleteDog(id))
+            dispatch(cleaner())
+            alert('La raza fue eliminada')
+            navigate('/home')
+        }else{
+            alert('Solo podemos eliminar las razas creadas por usted.')
+        }
+    }
+           
 
     return (
         <div className="divDetail">
@@ -23,6 +42,7 @@ export default function Detail(props) {
             <Link to='/dogs'>
                 <button className="buttonHome1">Crear Perro</button>
             </Link>
+            <button onClick={(e) => handleDelete(e)}>Borrar Perro</button> 
             
 
            
